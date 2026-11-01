@@ -1,6 +1,14 @@
 # B580 System Monitor for Deckboard
 
-Linux system monitor focused on the Intel Arc B580 using the Xe driver's kernel telemetry. It is implemented in JavaScript and does not require shell scripts, `sudo`, `perf`, or external monitoring utilities.
+Linux system monitor focused on the Intel Arc B580 using the Xe driver's kernel telemetry. Implemented in JavaScript without shell scripts, `sudo`, `perf`, or external monitoring utilities.
+
+## Extension identity
+
+- Deckboard name: `B580 System Monitor (Riquer777)`
+- Package ID: `riquer777-b580-system-monitor-linux`
+- Generated file: `riquer777-b580-system-monitor-linux.asar`
+
+The `package` field in `extension.yml` and the `name` field in `package.json` must remain identical.
 
 ## Features
 
@@ -12,14 +20,56 @@ Linux system monitor focused on the Intel Arc B580 using the Xe driver's kernel 
 - RAM usage.
 - Network download and upload in Mbit/s.
 
+## Installation
+
+Requirements:
+- Deckboard 3.1.1 or newer with extension support.
+- Linux with readable `/proc` and `/sys/class/hwmon` telemetry.
+- Node.js 18+ and npm.
+
+Clone and install dependencies:
+
+```bash
+git clone https://github.com/Riquer777/deckboard-system-info-linux.git
+cd deckboard-system-info-linux
+npm install
+npm run check
+```
+
+Build the extension:
+
+```bash
+npm run build
+```
+
+The generated file is:
+
+```text
+dist/riquer777-b580-system-monitor-linux.asar
+```
+
+To build and install automatically:
+
+```bash
+npm run install:deckboard
+```
+
+Or copy manually:
+
+```bash
+mkdir -p ~/deckboard/extensions
+cp dist/riquer777-b580-system-monitor-linux.asar ~/deckboard/extensions/
+```
+
+Remove the previous package `deckboard-system-info-linux.asar` from the extensions folder to avoid loading an old duplicate. Fully close and reopen Deckboard.
+
 ## How to use
 
-1. Install the extension in Deckboard.
-2. Add the **Monitor: ON / OFF** action to a Deckboard button. Press it to start or stop sampling.
-3. Add the **Measurement interval** action to another button. Each press advances to the next interval.
-4. Add the GPU Usage, CPU Usage, GPU Details, Network Speed, and CPU Temperature actions as needed. The metric selector appears where an action offers more than one metric.
+1. Add **Monitor: ON / OFF** to a Deckboard button to start or stop sampling.
+2. Add **Measurement interval** to another button. Each press advances to the next interval.
+3. Add the GPU Usage, CPU Usage, GPU Details, Network Speed, and CPU Details actions as needed. Select the metric in the action's selector.
 
-The extension starts with monitoring OFF. The default interval is 200 ms. Each press advances to 500 ms, then 1000 ms, then back to 200 ms.
+Monitoring starts OFF. The default interval is 200 ms.
 
 ## Telemetry details
 
@@ -39,16 +89,4 @@ CPU usage is calculated from deltas in `/proc/stat`. RAM usage is calculated fro
 
 ### Network
 
-The extension aggregates RX/TX byte counters from `/proc/net/dev`, excluding the loopback interface. Rates are calculated from the elapsed time between samples and displayed in decimal Mbit/s.
-
-## Requirements
-
-- Deckboard 3.1.1 or newer with JavaScript extension support.
-- Linux with readable `/proc` and `/sys/class/hwmon` telemetry.
-- Intel Xe GPU driver for Arc B580 GPU/VRAM telemetry.
-
-## Notes
-
-- The GPU telemetry target is currently set to PCI device `0000:05:00.0` (the Arc B580 in the original development system).
-- If the GPU driver does not expose DRM client counters, GPU usage and VRAM usage may show zero or N/A depending on the available data.
-- The 200 ms interval increases sampling frequency and may use more CPU than 500 ms or 1000 ms.
+The extension aggregates RX/TX byte counters from `/proc/net/dev`, excluding loopback. Rates are calculated from elapsed time and displayed in decimal Mbit/s.
