@@ -1,15 +1,19 @@
 {
-  "name": "deckboard-system-info-linux",
-  "version": "1.1.0",
+  "name": "riquer777-b580-system-monitor-linux",
+  "version": "1.2.0",
   "description": "Linux system monitor for Deckboard with Intel Arc B580 Xe telemetry",
   "main": "index.js",
   "scripts": {
+    "check": "node --check index.js",
     "build": "deckboard-kit --build",
-    "install": "deckboard-kit --install"
+    "install:deckboard": "deckboard-kit --install"
   },
   "author": "Riquer777",
   "license": "MIT",
   "dependencies": {
-    "deckboard-kit": "https://github.com/rivafarabi/deckboard-kit.git"
+    "deckboard-kit": "^1.0.0"
+  },
+  "devDependencies": {
+    "deckboard-kit-cli": "^1.1.3"
   }
 }
