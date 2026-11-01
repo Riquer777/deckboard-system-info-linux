@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { Extension, log, INPUT_METHOD, PLATFORMS } = require('deckboard-kit');
+const { Extension, InputTypes, Platforms, log } = require('deckboard-kit');
 
 const GPU_PCI = '0000:05:00.0';
 const INTERVALS = [200, 500, 1000];
@@ -23,12 +23,12 @@ const ZERO_VALUES = {
 };
 
 class B580Monitor extends Extension {
-  constructor(props) {
+  constructor(props = {}) {
     super(props);
 
     this.setValue = props.setValue;
     this.name = 'B580 System Monitor';
-    this.platforms = [PLATFORMS.LINUX];
+    this.platforms = [Platforms.linux];
 
     this.running = false;
     this.intervalIndex = 0;
@@ -64,7 +64,7 @@ class B580Monitor extends Extension {
         input: [
           {
             label: 'Metric',
-            type: INPUT_METHOD.INPUT_SELECT,
+            type: InputTypes.select,
             items: [
               { value: 'b580-gpu-load', label: 'GPU Usage (busiest engine)' }
             ]
@@ -82,7 +82,7 @@ class B580Monitor extends Extension {
         input: [
           {
             label: 'Metric',
-            type: INPUT_METHOD.INPUT_SELECT,
+            type: InputTypes.select,
             items: [
               { value: 'b580-cpu-load', label: 'CPU Usage' }
             ]
@@ -100,7 +100,7 @@ class B580Monitor extends Extension {
         input: [
           {
             label: 'Metric',
-            type: INPUT_METHOD.INPUT_SELECT,
+            type: InputTypes.select,
             items: [
               { value: 'b580-vram-used', label: 'VRAM Used (MiB)' },
               { value: 'b580-gpu-temp', label: 'GPU Package Temperature' },
@@ -119,7 +119,7 @@ class B580Monitor extends Extension {
         input: [
           {
             label: 'Metric',
-            type: INPUT_METHOD.INPUT_SELECT,
+            type: InputTypes.select,
             items: [
               { value: 'b580-download', label: 'Download (Mbit/s)' },
               { value: 'b580-upload', label: 'Upload (Mbit/s)' }
@@ -137,7 +137,7 @@ class B580Monitor extends Extension {
         input: [
           {
             label: 'Metric',
-            type: INPUT_METHOD.INPUT_SELECT,
+            type: InputTypes.select,
             items: [
               { value: 'b580-cpu-temp', label: 'CPU Package Temperature' },
               { value: 'b580-ram-used', label: 'RAM Usage (%)' }
