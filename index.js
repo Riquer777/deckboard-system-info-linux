@@ -10,7 +10,7 @@ const ENGINE_NAMES = ['rcs', 'vcs', 'vecs', 'bcs', 'ccs'];
 
 const ZERO_VALUES = {
   'b580-monitor': 'OFF',
-  'b580-interval': '500 ms',
+  'b580-interval': '200 ms',
   'b580-gpu-load': { title: 'GPU Usage', value: '0', suffix: '%' },
   'b580-vram-used': '0 MiB',
   'b580-gpu-temp': '0 °C',
@@ -31,9 +31,8 @@ class B580Monitor extends Extension {
     this.platforms = [PLATFORMS.LINUX];
 
     this.running = false;
-    this.intervalIndex = 1;
+    this.intervalIndex = 0;
     this.timer = null;
-    this.previous = null;
     this.lastGpu = null;
     this.lastCpu = null;
     this.lastNetwork = null;
@@ -85,8 +84,7 @@ class B580Monitor extends Extension {
             label: 'Metric',
             type: INPUT_METHOD.INPUT_SELECT,
             items: [
-              { value: 'b580-cpu-load', label: 'CPU Usage' },
-              { value: 'b580-ram-used', label: 'RAM Usage' }
+              { value: 'b580-cpu-load', label: 'CPU Usage' }
             ]
           }
         ],
@@ -130,12 +128,22 @@ class B580Monitor extends Extension {
         ]
       },
       {
-        label: 'CPU Temperature',
-        value: 'b580-cpu-temperature',
+        label: 'CPU Details',
+        value: 'b580-cpu-details',
         icon: 'thermometer-half',
         mode: 'custom-value',
         fontIcon: 'fas',
-        color: '#D35400'
+        color: '#D35400',
+        input: [
+          {
+            label: 'Metric',
+            type: INPUT_METHOD.INPUT_SELECT,
+            items: [
+              { value: 'b580-cpu-temp', label: 'CPU Package Temperature' },
+              { value: 'b580-ram-used', label: 'RAM Usage (%)' }
+            ]
+          }
+        ]
       }
     ];
 
@@ -176,7 +184,6 @@ class B580Monitor extends Extension {
 
   startMonitoring() {
     this.running = true;
-    this.previous = null;
     this.lastGpu = null;
     this.lastCpu = null;
     this.lastNetwork = null;
@@ -196,7 +203,6 @@ class B580Monitor extends Extension {
       this.timer = null;
     }
 
-    this.previous = null;
     this.lastGpu = null;
     this.lastCpu = null;
     this.lastNetwork = null;
@@ -253,11 +259,7 @@ class B580Monitor extends Extension {
           suffix: '%'
         },
         'b580-cpu-temp': temperatures.cpu === null ? 'N/A' : temperatures.cpu.toFixed(0) + ' °C',
-        'b580-ram-used': {
-          title: 'RAM Usage',
-          value: memory.percent.toFixed(1),
-          suffix: '%'
-        },
+        'b580-ram-used': memory.percent.toFixed(1) + ' %',
         'b580-download': networkRates.download.toFixed(2) + ' Mbit/s',
         'b580-upload': networkRates.upload.toFixed(2) + ' Mbit/s'
       };
