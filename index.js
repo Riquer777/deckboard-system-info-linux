@@ -168,6 +168,10 @@ class B580Monitor extends Extension {
 
   publish(values) {
     try {
+      if (typeof this.setValue !== 'function') {
+        log.error('Deckboard did not provide the setValue callback to this extension.');
+        return;
+      }
       this.setValue(values);
     } catch (error) {
       log.error('Unable to update Deckboard values:', error);
