@@ -1,7 +1,7 @@
-name: System Info
-package: deckboard-system-info
-version: 1.0.0
-description: "Display computer system information as graph"
-author: Riva Farabi
+name: B580 System Monitor
+package: deckboard-system-info-linux
+version: 1.1.0
+description: "Linux system monitor with Intel Arc B580 telemetry and network speeds"
+author: Riquer777
 license: MIT
-repository: "https://github.com/rivafarabi/deckboard-system-info"
+repository: "https://github.com/Riquer777/deckboard-system-info-linux"
