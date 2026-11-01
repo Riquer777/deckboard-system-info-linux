@@ -1,16 +1,15 @@
 {
-    "name": "system-info",
-    "version": "1.0.0",
-    "description": "Display computer system information ",
-    "main": "index.js",
-    "scripts": {
-        "build": "deckboard-kit --build",
-        "install": "deckboard-kit --install"
-    },
-    "author": "Riva Farabi",
-    "license": "MIT",
-    "dependencies": {
-        "deckboard-kit": "https://github.com/rivafarabi/deckboard-kit.git",
-        "systeminformation": "^5.22.7"
-    }
+  "name": "deckboard-system-info-linux",
+  "version": "1.1.0",
+  "description": "Linux system monitor for Deckboard with Intel Arc B580 Xe telemetry",
+  "main": "index.js",
+  "scripts": {
+    "build": "deckboard-kit --build",
+    "install": "deckboard-kit --install"
+  },
+  "author": "Riquer777",
+  "license": "MIT",
+  "dependencies": {
+    "deckboard-kit": "https://github.com/rivafarabi/deckboard-kit.git"
+  }
 }
