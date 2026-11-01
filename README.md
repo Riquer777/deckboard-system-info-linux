@@ -19,7 +19,7 @@ Linux system monitor focused on the Intel Arc B580 using the Xe driver's kernel 
 3. Add the **Measurement interval** action to another button. Each press advances to the next interval.
 4. Add the GPU Usage, CPU Usage, GPU Details, Network Speed, and CPU Temperature actions as needed. The metric selector appears where an action offers more than one metric.
 
-The extension starts with monitoring OFF. The default interval is 500 ms.
+The extension starts with monitoring OFF. The default interval is 200 ms. Each press advances to 500 ms, then 1000 ms, then back to 200 ms.
 
 ## Telemetry details
 
